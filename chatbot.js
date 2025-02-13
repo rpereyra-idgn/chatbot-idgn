@@ -23,22 +23,47 @@
     chatWindow.style.borderRadius = "10px";
     chatWindow.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
     chatWindow.style.display = "none";
+    chatWindow.style.width = "250px";
     
-    const questionList = [
-        "📦 Estado de mi pedido",
-        "💳 Métodos de pago",
-        "🚚 Opciones de envío",
-        "❓ Otra consulta"
-    ];
+    const chatHeader = document.createElement("div");
+    chatHeader.innerHTML = "🤖 Chatbot";
+    chatHeader.style.background = "#25D366";
+    chatHeader.style.color = "white";
+    chatHeader.style.padding = "10px";
+    chatHeader.style.textAlign = "center";
+    chatHeader.style.borderRadius = "10px 10px 0 0";
+    chatWindow.appendChild(chatHeader);
     
-    questionList.forEach(question => {
+    const chatBody = document.createElement("div");
+    chatBody.style.padding = "10px";
+    chatBody.style.maxHeight = "200px";
+    chatBody.style.overflowY = "auto";
+    chatBody.innerHTML = "<p>¡Hola! ¿En qué puedo ayudarte?</p>";
+    chatWindow.appendChild(chatBody);
+    
+    const responses = {
+        "📦 Estado de mi pedido": "Puedes rastrear tu pedido ingresando tu número de orden en nuestra página de seguimiento.",
+        "💳 Métodos de pago": "Aceptamos tarjetas de crédito, débito y pagos por transferencia bancaria.",
+        "🚚 Opciones de envío": "Realizamos envíos a todo el país con tiempos de entrega de 3 a 7 días hábiles.",
+        "❓ Otra consulta": "Si necesitas más ayuda, contáctanos por WhatsApp."
+    };
+    
+    Object.keys(responses).forEach(question => {
         const questionButton = document.createElement("div");
         questionButton.innerHTML = question;
         questionButton.style.padding = "8px";
         questionButton.style.cursor = "pointer";
         questionButton.style.borderBottom = "1px solid #ddd";
         questionButton.addEventListener("click", () => {
-            window.open(`https://wa.me/3416663126?text=${encodeURIComponent(question)}`, "_blank");
+            chatBody.innerHTML += `<p><strong>Tú:</strong> ${question}</p>`;
+            chatBody.innerHTML += `<p><strong>Chatbot:</strong> ${responses[question]}</p>`;
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            if (question === "❓ Otra consulta") {
+                setTimeout(() => {
+                    window.open("https://wa.me/3416663126?text=Hola,%20necesito%20ayuda", "_blank");
+                }, 2000);
+            }
         });
         chatWindow.appendChild(questionButton);
     });
