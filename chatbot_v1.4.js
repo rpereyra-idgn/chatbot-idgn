@@ -59,7 +59,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer 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"
+                "Authorization": "Bearer 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"
             },
             body: JSON.stringify({
                 model: "gpt-4",
